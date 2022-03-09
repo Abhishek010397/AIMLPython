@@ -25,7 +25,6 @@ class HumanRecognition():
     def detect_human(self,image,value):
         human_image=image
         human_rectangle=human_cascade.detectMultiScale(human_image,scaleFactor=1.02,minNeighbors=4)
-        # print(human_rectangle)
         if type(human_rectangle) == numpy.ndarray and type(human_rectangle) == numpy.ndarray:
             value=True
         for (x,y,w,h) in human_rectangle:
@@ -61,13 +60,12 @@ class HumanRecognition():
         capture=cv2.VideoCapture(0)
         count = 1
         while True:
-            capture.set(cv2.CAP_PROP_FPS, 10)
+            capture.set(cv2.CAP_PROP_FPS, 2)
             ret,frame = capture.read()
             grayFrame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             if ret:
                 value = None
                 detection,val=self.detect_human(grayFrame,value)
-                # print(val)
                 if val == True:
                     font = cv2.FONT_HERSHEY_SIMPLEX
                     validate_face=self.face_validation(frame)
@@ -75,9 +73,9 @@ class HumanRecognition():
                         if count == 1:
                             now = datetime.datetime.now()
                             now = now.strftime("%H:%M:%S")
-                            cv2.imwrite(now+'frame.jpeg',frame)
                             cv2.putText(detection, text=validate_face, org=(35, 425), fontFace=font, thickness=2,
                                         color=(255, 0, 0), lineType=cv2.LINE_AA, fontScale=1.25)
+                            cv2.imwrite(now + 'frame.jpeg', detection)
                             cv2.imshow('frame', detection)
                             count=count+1
                         if count > 1:
@@ -89,7 +87,6 @@ class HumanRecognition():
                         if count == 1:
                             now = datetime.datetime.now()
                             now = now.strftime("%H:%M:%S")
-                            cv2.imwrite(now + 'frame.jpeg', frame)
                             cv2.putText(detection, text=validate_face, org=(35, 425), fontFace=font, thickness=2,
                                         color=(255, 0, 0), lineType=cv2.LINE_AA, fontScale=1.25)
                             cv2.imshow('frame', detection)
@@ -109,3 +106,4 @@ class HumanRecognition():
 if __name__ == '__main__':
     initiate=HumanRecognition()
     initiate.video_cam()
+
