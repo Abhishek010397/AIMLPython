@@ -11,7 +11,7 @@ from flask import Flask,Response,render_template
 app = Flask(__name__)
 
 try:
-    client = pymongo.MongoClient(host='23.20.28.91', port=27017, username='root', password='pass', authSource="admin")
+    client = pymongo.MongoClient(host='hostname', port=27017, username='root', password='pass', authSource="admin")
     print("okay connection!!")
     db = client["users_db"]
     col = db.webcam_recognize
